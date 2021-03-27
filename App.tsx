@@ -24,9 +24,7 @@ const App: React.FC = () => {
 
   if (!fontsLoaded) {
     return <AppLoading />;
-  }
-
-  return <SignIn />;
+  } else return <SignIn />;
 };
 
 export default App;
