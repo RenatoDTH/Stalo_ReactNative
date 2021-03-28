@@ -8,10 +8,11 @@ import {
   Roboto_500Medium,
   Roboto_700Bold,
 } from '@expo-google-fonts/roboto';
+import { NavigationContainer } from '@react-navigation/native';
 import AppLoading from 'expo-app-loading';
 import React from 'react';
 
-import { SignIn } from './src/presentation/pages';
+import AuthRoutes from './src/routes/auth.routes';
 
 const App: React.FC = () => {
   const [fontsLoaded] = useFonts({
@@ -24,7 +25,12 @@ const App: React.FC = () => {
 
   if (!fontsLoaded) {
     return <AppLoading />;
-  } else return <SignIn />;
+  } else
+    return (
+      <NavigationContainer>
+        <AuthRoutes />
+      </NavigationContainer>
+    );
 };
 
 export default App;
