@@ -7,12 +7,12 @@ interface Props {
 }
 
 export const Container = styled.View<Props>`
-  width: 100%;
+  width: 327px;
   height: 56px;
   padding: 19px 25px;
   border-radius: 32px;
+  background: #ffffff;
   border: 1px solid #d0dbea;
-  outline: none;
   flex-direction: row;
   align-items: center;
   margin-bottom: 16px;
