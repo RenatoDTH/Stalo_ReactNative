@@ -7,39 +7,45 @@ import * as Yup from 'yup';
 
 import { Input, Button } from '../../../components/index';
 import getValidationErrors from '../../../utils/getValidationsErrors';
-import {
-  Container,
-  Title,
-  ForgotPassword,
-  Footer,
-  FooterText,
-  CreateAccountButton,
-} from './styles';
+import { Container, Title, Footer, GoBackToLogin } from './styles';
 
-interface SignInFormData {
+interface SignUpFormData {
+  name: string;
   email: string;
+  age: number;
   password: string;
 }
 
-const SignIn: React.FC = () => {
+const SignUp: React.FC = () => {
   const navigation = useNavigation();
   const formRef = useRef<FormHandles>(null);
   const passwordInputRef = useRef<TextInput>(null);
+  const emailInputRef = useRef<TextInput>(null);
+  const ageInputRef = useRef<TextInput>(null);
 
-  const handleSignIn = useCallback(async (data: SignInFormData) => {
+  const handleSignUp = useCallback(async (data: SignUpFormData) => {
     try {
       formRef.current?.setErrors({});
 
       const schema = Yup.object().shape({
+        name: Yup.string().required('Nome obrigatório'),
         email: Yup.string()
           .required('E=mail obrigatório')
           .email('Digite um e-mail válido'),
+        age: Yup.number().required('Idade obrigatório'),
         password: Yup.string().required('Senha obrigatória'),
       });
 
       await schema.validate(data, {
         abortEarly: false,
       });
+
+      Alert.alert(
+        'Cadastro realizado com sucesso!',
+        'Você já pode fazer login na aplicação',
+      );
+
+      navigation.goBack();
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errors = getValidationErrors(err);
@@ -48,7 +54,7 @@ const SignIn: React.FC = () => {
       }
 
       Alert.alert(
-        'Erro na autenticação',
+        'Erro no cadastro',
         'Ocorreu um erro ao fazer login, cheque as credenciais',
       );
     }
@@ -57,18 +63,40 @@ const SignIn: React.FC = () => {
   return (
     <>
       <Container>
-        <Title>Bem-vindo(a)!</Title>
-        <Form ref={formRef} onSubmit={handleSignIn}>
+        <Title>Cadastre sua conta.</Title>
+        <Form ref={formRef} onSubmit={handleSignUp}>
+          <Input
+            autoCapitalize="words"
+            returnKeyType="next"
+            onSubmitEditing={() => {
+              emailInputRef.current?.focus();
+            }}
+            name="name"
+            placeholder="Nome"
+          />
           <Input
             autoCorrect={false}
             autoCapitalize="none"
             keyboardType="email-address"
             returnKeyType="next"
             onSubmitEditing={() => {
-              passwordInputRef.current?.focus();
+              ageInputRef.current?.focus();
             }}
             name="email"
             placeholder="E-mail"
+            ref={emailInputRef}
+          />
+
+          <Input
+            autoCapitalize="none"
+            keyboardType="numeric"
+            returnKeyType="next"
+            onSubmitEditing={() => {
+              passwordInputRef.current?.focus();
+            }}
+            name="age"
+            placeholder="Idade"
+            ref={ageInputRef}
           />
           <Input
             secureTextEntry
@@ -78,25 +106,21 @@ const SignIn: React.FC = () => {
             icon="eye"
             placeholder="Senha"
           />
-          <ForgotPassword onPress={() => {}}>
-            Esqueceu sua senha?
-          </ForgotPassword>
 
-          <Button onPress={() => formRef.current?.submitForm()}>Login</Button>
+          <Button onPress={() => formRef.current?.submitForm()}>SignUp</Button>
         </Form>
         <Footer>
-          <FooterText>Não tem uma conta? </FooterText>
-          <CreateAccountButton
+          <GoBackToLogin
             onPress={() => {
-              navigation.navigate('SignUp');
+              navigation.navigate('SignIn');
             }}
           >
-            Cadastre-se
-          </CreateAccountButton>
+            Voltar para login
+          </GoBackToLogin>
         </Footer>
       </Container>
     </>
   );
 };
 
-export default SignIn;
+export default SignUp;

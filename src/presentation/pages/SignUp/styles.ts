@@ -20,32 +20,15 @@ export const Title = styled.Text`
   margin-top: 125px;
 `;
 
-export const ForgotPassword = styled.TouchableOpacity`
-  margin-top: 8px;
-  font-family: Inter_500Medium;
-  font-size: 15px;
-  line-height: 25px;
-  text-align: right;
-  letter-spacing: 0.5px;
-  margin-bottom: 16px;
-  right: 0;
-`;
-
 export const Footer = styled.View`
   flex: 1;
   flex-direction: row;
-  margin-top: 161px;
+  margin-top: 80px;
   text-align: center;
   justify-content: center;
 `;
-export const FooterText = styled.Text`
-  font-family: Roboto_500Medium;
-  font-size: 15px;
-  line-height: 25px;
-  letter-spacing: 0.5px;
-  color: #2e3e5c;
-`;
-export const CreateAccountButton = styled.TouchableOpacity`
+
+export const GoBackToLogin = styled.TouchableOpacity`
   font-family: Roboto_700Bold;
   text-align: right;
   font-size: 15px;
