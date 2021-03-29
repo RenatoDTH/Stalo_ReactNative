@@ -1,42 +1,50 @@
 import { Feather } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import React, { useCallback } from 'react';
+import React from 'react';
 
-import { useAuth } from '../hooks/auth';
+import { ModalLogOut } from '../components';
 import { Home } from '../presentation/pages';
 import LogOut from '../presentation/pages/LogOut';
 
 const Tab = createBottomTabNavigator();
 
 const AppRoutes: React.FC = () => {
-  const { signOut } = useAuth();
-  const handleSignOut = useCallback(() => {
-    signOut();
-  }, [signOut]);
-
   return (
     <Tab.Navigator
       tabBarOptions={{
         style: { elevation: 0, shadowOpacity: 0, height: 64 },
         tabStyle: {
-          flexDirection: 'row',
+          flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
         },
         iconStyle: {
           flex: 0,
-          width: 20,
-          height: 20,
+          width: 22,
+          height: 22,
         },
+        labelStyle: {
+          fontFamily: 'Inter_500Medium',
+          fontSize: 12,
+          marginTop: 9,
+        },
+        inactiveTintColor: '#9FA5C0',
+        activeTintColor: '#1FCC79',
       }}
     >
       <Tab.Screen
         name="Home"
         component={Home}
         options={{
-          tabBarLabel: 'home',
-          tabBarIcon: () => {
-            return <Feather name="home" size={24} color="red" />;
+          tabBarLabel: 'Home',
+          tabBarIcon: ({ color, size, focused }) => {
+            return (
+              <Feather
+                name="home"
+                size={size}
+                color={focused ? '#1FCC79' : color}
+              />
+            );
           },
         }}
       />
@@ -45,9 +53,15 @@ const AppRoutes: React.FC = () => {
         name="LogOut"
         component={LogOut}
         options={{
-          tabBarLabel: 'logout',
-          tabBarIcon: () => {
-            return <Feather name="log-out" size={24} color="green" />;
+          tabBarLabel: 'Logout',
+          tabBarIcon: ({ color, size, focused }) => {
+            return (
+              <Feather
+                name="log-out"
+                size={size}
+                color={focused ? '#1FCC79' : color}
+              />
+            );
           },
         }}
       />
