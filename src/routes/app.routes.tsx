@@ -1,9 +1,10 @@
 import { Feather } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
+import { View } from 'react-native';
 
 import { ModalLogOut } from '../components';
-import { Home } from '../presentation/pages';
+import { Home, SignIn } from '../presentation/pages';
 import LogOut from '../presentation/pages/LogOut';
 
 const Tab = createBottomTabNavigator();
@@ -20,8 +21,8 @@ const AppRoutes: React.FC = () => {
         },
         iconStyle: {
           flex: 0,
-          width: 22,
-          height: 22,
+          height: 20,
+          width: 20,
         },
         labelStyle: {
           fontFamily: 'Inter_500Medium',
@@ -41,7 +42,7 @@ const AppRoutes: React.FC = () => {
             return (
               <Feather
                 name="home"
-                size={size}
+                size={20}
                 color={focused ? '#1FCC79' : color}
               />
             );
@@ -49,6 +50,31 @@ const AppRoutes: React.FC = () => {
         }}
       />
 
+      <Tab.Screen
+        name="SignIn"
+        component={SignIn}
+        options={{
+          tabBarLabel: 'Adicionar',
+          tabBarIcon: () => {
+            return (
+              <View
+                style={{
+                  width: 58,
+                  height: 58,
+                  borderRadius: 32,
+                  backgroundColor: '#1FCC79',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  alignContent: 'center',
+                  top: -17,
+                }}
+              >
+                <Feather name="plus" size={24} color="#fff" />
+              </View>
+            );
+          },
+        }}
+      />
       <Tab.Screen
         name="LogOut"
         component={LogOut}
@@ -58,7 +84,7 @@ const AppRoutes: React.FC = () => {
             return (
               <Feather
                 name="log-out"
-                size={size}
+                size={20}
                 color={focused ? '#1FCC79' : color}
               />
             );
