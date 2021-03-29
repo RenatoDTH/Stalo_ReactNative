@@ -13,7 +13,7 @@ import AppLoading from 'expo-app-loading';
 import React from 'react';
 
 import AppProvider from './src/hooks';
-import AuthRoutes from './src/routes/auth.routes';
+import Routes from './src/routes';
 
 const App: React.FC = () => {
   const [fontsLoaded] = useFonts({
@@ -30,7 +30,7 @@ const App: React.FC = () => {
     return (
       <NavigationContainer>
         <AppProvider>
-          <AuthRoutes />
+          <Routes />
         </AppProvider>
       </NavigationContainer>
     );
