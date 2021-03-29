@@ -12,6 +12,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import AppLoading from 'expo-app-loading';
 import React from 'react';
 
+import AppProvider from './src/hooks';
 import AuthRoutes from './src/routes/auth.routes';
 
 const App: React.FC = () => {
@@ -28,7 +29,9 @@ const App: React.FC = () => {
   } else
     return (
       <NavigationContainer>
-        <AuthRoutes />
+        <AppProvider>
+          <AuthRoutes />
+        </AppProvider>
       </NavigationContainer>
     );
 };
