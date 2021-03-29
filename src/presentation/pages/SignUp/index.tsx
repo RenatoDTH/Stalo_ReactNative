@@ -7,7 +7,13 @@ import * as Yup from 'yup';
 
 import { Input, Button } from '../../../components/index';
 import getValidationErrors from '../../../utils/getValidationsErrors';
-import { Container, Title, Footer, GoBackToLogin } from './styles';
+import {
+  Container,
+  Title,
+  Footer,
+  GoBackToLogin,
+  GoBackToLoginText,
+} from './styles';
 
 interface SignUpFormData {
   name: string;
@@ -115,7 +121,7 @@ const SignUp: React.FC = () => {
               navigation.navigate('SignIn');
             }}
           >
-            Voltar para login
+            <GoBackToLoginText>Voltar para login</GoBackToLoginText>
           </GoBackToLogin>
         </Footer>
       </Container>

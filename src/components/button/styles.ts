@@ -6,12 +6,11 @@ export const Container = styled(RectButton)`
   height: 56px;
   padding: 19px 25px;
   border-radius: 32px;
-  outline: none;
   background-color: #1fcc79;
   justify-content: center;
   align-items: center;
-  margin-bottom: 16px;
-  margin-top: 54px;
+  margin-bottom: 8px;
+  margin-top: 32px;
 `;
 
 export const ButtonText = styled.Text`
@@ -20,7 +19,7 @@ export const ButtonText = styled.Text`
   font-size: 15px;
   line-height: 18px;
   text-align: center;
-  letter-spacing: 0.007em;
+  letter-spacing: 0.112px;
 `;
 
 export const ButtonContainer = styled.View``;

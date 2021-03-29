@@ -30,13 +30,15 @@ export const Container = styled.View<Props>`
     `}
 `;
 
-export const TextInput = styled.TextInput`
+export const TextInput = styled.TextInput.attrs({
+  placeholderTextColor: 'rgba(255, 255, 255, 0.8)',
+})`
   flex: 1;
   color: #9fa5c0;
   font-size: 15px;
   font-family: Roboto_500Medium;
   line-height: 18px;
-  letter-spacing: 0.007em;
+  letter-spacing: 0.112px;
 `;
 
 export const Icon = styled(Feather)``;

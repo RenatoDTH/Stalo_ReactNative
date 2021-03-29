@@ -69,6 +69,7 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
       <TextInput
         ref={inputElementRef}
         placeholderTextColor="#9FA5C0"
+        s
         defaultValue={defaultValue}
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}

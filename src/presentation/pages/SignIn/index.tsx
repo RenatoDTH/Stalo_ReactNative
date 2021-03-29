@@ -2,7 +2,13 @@ import { useNavigation } from '@react-navigation/native';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/mobile';
 import React, { useCallback, useRef } from 'react';
-import { Alert, TextInput } from 'react-native';
+import {
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  TextInput,
+} from 'react-native';
 import * as Yup from 'yup';
 
 import { Input, Button } from '../../../components/index';
@@ -14,6 +20,8 @@ import {
   Footer,
   FooterText,
   CreateAccountButton,
+  CreateAccountButtonText,
+  ForgotPasswordText,
 } from './styles';
 
 interface SignInFormData {
@@ -56,45 +64,60 @@ const SignIn: React.FC = () => {
 
   return (
     <>
-      <Container>
-        <Title>Bem-vindo(a)!</Title>
-        <Form ref={formRef} onSubmit={handleSignIn}>
-          <Input
-            autoCorrect={false}
-            autoCapitalize="none"
-            keyboardType="email-address"
-            returnKeyType="next"
-            onSubmitEditing={() => {
-              passwordInputRef.current?.focus();
-            }}
-            name="email"
-            placeholder="E-mail"
-          />
-          <Input
-            secureTextEntry
-            returnKeyType="send"
-            onSubmitEditing={() => formRef.current?.submitForm()}
-            name="password"
-            icon="eye"
-            placeholder="Senha"
-          />
-          <ForgotPassword onPress={() => {}}>
-            Esqueceu sua senha?
-          </ForgotPassword>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        enabled
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      >
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={{ flex: 1 }}
+        >
+          <Container>
+            <Title>Bem-vindo(a)!</Title>
+            <Form ref={formRef} onSubmit={handleSignIn}>
+              <Input
+                autoCorrect={false}
+                autoCapitalize="none"
+                keyboardType="email-address"
+                returnKeyType="next"
+                onSubmitEditing={() => {
+                  passwordInputRef.current?.focus();
+                }}
+                name="email"
+                placeholder="E-mail"
+                placeholderTextColor="red"
+              />
+              <Input
+                secureTextEntry
+                returnKeyType="send"
+                onSubmitEditing={() => formRef.current?.submitForm()}
+                name="password"
+                icon="eye"
+                placeholder="Senha"
+                placeholderTextColor="red"
+              />
+              <ForgotPassword onPress={() => {}}>
+                <ForgotPasswordText>Esqueceu sua senha?</ForgotPasswordText>
+              </ForgotPassword>
 
-          <Button onPress={() => formRef.current?.submitForm()}>Login</Button>
-        </Form>
-        <Footer>
-          <FooterText>Não tem uma conta? </FooterText>
-          <CreateAccountButton
-            onPress={() => {
-              navigation.navigate('SignUp');
-            }}
-          >
-            Cadastre-se
-          </CreateAccountButton>
-        </Footer>
-      </Container>
+              <Button onPress={() => formRef.current?.submitForm()}>
+                Login
+              </Button>
+            </Form>
+            <Footer>
+              <FooterText>Não tem uma conta? </FooterText>
+              <CreateAccountButton
+                onPress={() => {
+                  navigation.navigate('SignUp');
+                }}
+              >
+                <CreateAccountButtonText>Cadastre-se</CreateAccountButtonText>
+              </CreateAccountButton>
+            </Footer>
+          </Container>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </>
   );
 };

@@ -16,21 +16,24 @@ export const Title = styled.Text`
   letter-spacing: 0.5px;
   text-align: center;
   color: #2e3e5c;
-  margin-bottom: 65px;
-  margin-top: 125px;
+  margin-bottom: 30px;
+  margin-top: 65px;
 `;
 
 export const Footer = styled.View`
   flex: 1;
   flex-direction: row;
-  margin-top: 80px;
+  margin-top: 20px;
   text-align: center;
   justify-content: center;
 `;
 
 export const GoBackToLogin = styled.TouchableOpacity`
-  font-family: Roboto_700Bold;
   text-align: right;
+`;
+
+export const GoBackToLoginText = styled.Text`
+  font-family: Roboto_700Bold;
   font-size: 15px;
   line-height: 25px;
   letter-spacing: 0.5px;
