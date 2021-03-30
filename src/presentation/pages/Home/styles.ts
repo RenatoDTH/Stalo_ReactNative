@@ -117,3 +117,7 @@ export const FooterViewTextTask = styled.Text`
   color: #1fcc79;
   margin-left: 20px;
 `;
+
+export const ItemScrowView = styled.ScrollView`
+  height: 220px;
+`;

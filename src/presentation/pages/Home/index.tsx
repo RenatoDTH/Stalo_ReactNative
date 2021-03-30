@@ -19,6 +19,7 @@ import {
   FooterView,
   FooterViewText,
   FooterViewTextTask,
+  ItemScrowView,
 } from './styles';
 
 interface Item {
@@ -128,7 +129,7 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <Container>
+    <Container style={{ flex: 1 }}>
       <HeaderView>
         <HeaderText>Filtrar</HeaderText>
         <ButtonView>
@@ -171,24 +172,25 @@ const Home: React.FC = () => {
           {dayOfTheWeek}. {day} de {month} de {year}
         </DateTextView>
       </DateView>
-
-      {items.map((item) => (
-        <ItemView key={item._id}>
-          {item.completed ? (
-            <IconFeather>
-              <Feather name="check" size={18} color="#fff" />
-            </IconFeather>
-          ) : (
-            <Feather name="circle" size={20} color="#9FA5C0" />
-          )}
-          <ButtonText>
-            <ItemText>{item.description}</ItemText>
-          </ButtonText>
-          <ItemButton>
-            <Feather name="more-vertical" size={20} color="#9FA5C0" />
-          </ItemButton>
-        </ItemView>
-      ))}
+      <ItemScrowView>
+        {items.map((item) => (
+          <ItemView key={item._id}>
+            {item.completed ? (
+              <IconFeather>
+                <Feather name="check" size={18} color="#fff" />
+              </IconFeather>
+            ) : (
+              <Feather name="circle" size={20} color="#9FA5C0" />
+            )}
+            <ButtonText>
+              <ItemText>{item.description}</ItemText>
+            </ButtonText>
+            <ItemButton>
+              <Feather name="more-vertical" size={20} color="#9FA5C0" />
+            </ItemButton>
+          </ItemView>
+        ))}
+      </ItemScrowView>
 
       <FooterView>
         <FooterViewText>Total de tarefas:</FooterViewText>
