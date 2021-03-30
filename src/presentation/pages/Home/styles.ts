@@ -32,3 +32,22 @@ export const ButtonView = styled.View`
   margin-right: 18px;
   margin-top: -5px;
 `;
+
+export const DateView = styled.View`
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  border-style: solid;
+  border-bottom-color: #f4f5f7;
+  border-bottom-width: 1px;
+  height: 50px;
+`;
+
+export const DateTextView = styled.Text`
+  font-family: Roboto_700Bold;
+  font-size: 17px;
+  line-height: 27px;
+  letter-spacing: 0.5px;
+  color: #2e3e5c;
+  margin-left: 20px;
+`;

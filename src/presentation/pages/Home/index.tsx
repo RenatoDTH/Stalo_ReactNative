@@ -1,12 +1,23 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { Button } from '../../../components';
-import { Container, HeaderView, HeaderText, ButtonView } from './styles';
+import {
+  Container,
+  HeaderView,
+  HeaderText,
+  ButtonView,
+  DateView,
+  DateTextView,
+} from './styles';
 
 const Home: React.FC = () => {
   const [isPressedEverything, setisPressedEverything] = useState(true);
   const [isPressedToDo, setisPressedToDo] = useState(false);
   const [isPressedDone, setisPressedDone] = useState(false);
+  const [dayOfTheWeek, setDayOfTheWeek] = useState<string>();
+  const [day, setDay] = useState<string>();
+  const [month, setMonth] = useState<string>();
+  const [year, setYear] = useState<number>();
 
   const handlePressedEverything = useCallback(() => {
     setisPressedEverything(true);
@@ -24,6 +35,33 @@ const Home: React.FC = () => {
     setisPressedEverything(false);
     setisPressedToDo(false);
     setisPressedDone(true);
+  }, []);
+
+  useEffect(() => {
+    const dayOfTheWeekArray = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'];
+    const monthOfTheYear = [
+      'Janeiro',
+      'Fevereiro',
+      'Março',
+      'Abril',
+      'Maio',
+      'Junho',
+      'Julho',
+      'Agosto',
+      'Setembro',
+      'Outubro',
+      'Novembro',
+      'Dezembro',
+    ];
+    const data = new Date(),
+      dayOfTheWeek = dayOfTheWeekArray[data.getDay()],
+      day = data.getDate().toString().padStart(2, '0'),
+      month = monthOfTheYear[data.getMonth()],
+      year = data.getFullYear();
+    setDayOfTheWeek(dayOfTheWeek);
+    setDay(day);
+    setMonth(month);
+    setYear(year);
   }, []);
 
   return (
@@ -65,6 +103,11 @@ const Home: React.FC = () => {
           </Button>
         </ButtonView>
       </HeaderView>
+      <DateView>
+        <DateTextView>
+          {dayOfTheWeek}. {day} de {month} de {year}
+        </DateTextView>
+      </DateView>
     </Container>
   );
 };
