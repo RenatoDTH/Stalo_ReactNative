@@ -20,6 +20,10 @@ import {
   FooterViewText,
   FooterViewTextTask,
   ItemScrowView,
+  Dropdown,
+  DropDownEdit,
+  DropDownEditText,
+  CloseDropDown,
 } from './styles';
 
 interface Item {
@@ -41,6 +45,7 @@ const Home: React.FC = () => {
   const [year, setYear] = useState<number>();
   const [items, setItems] = useState<Item[]>([]);
   const [completed, setCompleted] = useState<Item[]>([]);
+  const [dropdownShow, setDropwDownShow] = useState(false);
 
   const navigation = useNavigation();
 
@@ -135,6 +140,10 @@ const Home: React.FC = () => {
     console.log(_id);
   };
 
+  const handleDropDownShow = () => {
+    setDropwDownShow(!dropdownShow);
+  };
+
   return (
     <Container style={{ flex: 1 }}>
       <HeaderView>
@@ -192,11 +201,57 @@ const Home: React.FC = () => {
             <ButtonText onLongPress={() => handleNavigationToDetails(item._id)}>
               <ItemText>{item.description}</ItemText>
             </ButtonText>
-            <ItemButton>
+            <ItemButton onPress={handleDropDownShow}>
               <Feather name="more-vertical" size={20} color="#9FA5C0" />
             </ItemButton>
           </ItemView>
         ))}
+
+        {dropdownShow && (
+          <Dropdown
+            style={{
+              shadowColor: '#000',
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.23,
+              shadowRadius: 2.62,
+              elevation: 4,
+            }}
+          >
+            <CloseDropDown onPress={handleDropDownShow}>
+              <Feather name="x-square" size={20} color="#FF6464" />
+            </CloseDropDown>
+            <DropDownEdit>
+              <Feather
+                name="edit"
+                size={24}
+                color="#9FA5C0"
+                style={{ marginRight: 10 }}
+              />
+              <DropDownEditText style={{ color: '#9FA5C0' }}>
+                Editar
+              </DropDownEditText>
+            </DropDownEdit>
+            <DropDownEdit>
+              <IconFeather style={{ marginRight: 12 }}>
+                <Feather name="check" size={24} color="#fff" />
+              </IconFeather>
+              <DropDownEditText style={{ color: '#1fcc79' }}>
+                Concluir
+              </DropDownEditText>
+            </DropDownEdit>
+            <DropDownEdit>
+              <Feather
+                name="trash-2"
+                size={24}
+                color="#FF6464"
+                style={{ marginRight: 10 }}
+              />
+              <DropDownEditText style={{ color: '#FF6464' }}>
+                Excluir
+              </DropDownEditText>
+            </DropDownEdit>
+          </Dropdown>
+        )}
       </ItemScrowView>
 
       <FooterView>

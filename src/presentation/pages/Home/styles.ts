@@ -78,7 +78,7 @@ export const ItemText = styled.Text`
   color: #2e3e5c;
   margin-left: 20px;
 `;
-export const ItemButton = styled.View`
+export const ItemButton = styled.TouchableOpacity`
   right: -10px;
   margin-left: 10px;
 `;
@@ -121,4 +121,35 @@ export const FooterViewTextTask = styled.Text`
 
 export const ItemScrowView = styled.ScrollView`
   height: 190px;
+`;
+
+export const Dropdown = styled.View`
+  width: 161px;
+  height: 161px;
+  position: absolute;
+  background-color: #fff;
+  padding: 24px;
+  align-self: center;
+  top: 20px;
+`;
+export const DropDownEdit = styled.TouchableOpacity`
+  height: 27px;
+  flex-direction: row;
+  margin-bottom: 16px;
+  align-items: center;
+`;
+export const DropDownEditText = styled.Text`
+  font-family: Inter_500Medium;
+  font-size: 17px;
+  line-height: 27px;
+  letter-spacing: 0.5px;
+  left: 0;
+`;
+
+export const CloseDropDown = styled.TouchableOpacity`
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  right: 0;
+  top: 0;
 `;
