@@ -39,7 +39,7 @@ export const DateView = styled.View`
   text-align: center;
   border-style: solid;
   border-bottom-color: #f4f5f7;
-  border-bottom-width: 1px;
+  border-bottom-width: 2px;
   height: 50px;
 `;
 
@@ -50,4 +50,45 @@ export const DateTextView = styled.Text`
   letter-spacing: 0.5px;
   color: #2e3e5c;
   margin-left: 20px;
+`;
+
+export const ItemView = styled.View`
+  align-content: center;
+  text-align: center;
+  align-items: center;
+  border-style: solid;
+  border-bottom-color: #f4f5f7;
+  border-bottom-width: 2px;
+  height: 50px;
+  flex-direction: row;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 100%;
+`;
+
+export const ButtonText = styled.TouchableOpacity`
+  width: 250px;
+`;
+
+export const ItemText = styled.Text`
+  font-family: Roboto_400Regular;
+  font-size: 17px;
+  line-height: 27px;
+  letter-spacing: 0.5px;
+  color: #2e3e5c;
+  margin-left: 20px;
+`;
+export const ItemButton = styled.View`
+  right: -10px;
+  margin-left: 10px;
+`;
+
+export const IconFeather = styled.View`
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  background-color: #1fcc79;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
 `;

@@ -22,7 +22,6 @@ const HomeStackScreen = () => {
       }}
       mode="modal"
     >
-      <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="AddModal" component={AddModal} />
     </Stack.Navigator>
   );

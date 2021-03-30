@@ -1,6 +1,8 @@
+import { Feather } from '@expo/vector-icons';
 import React, { useCallback, useEffect, useState } from 'react';
 
 import { Button } from '../../../components';
+import api from '../../../services/api';
 import {
   Container,
   HeaderView,
@@ -8,7 +10,21 @@ import {
   ButtonView,
   DateView,
   DateTextView,
+  ItemView,
+  ItemText,
+  ItemButton,
+  ButtonText,
+  IconFeather,
 } from './styles';
+
+interface Item {
+  _id: string;
+  description: string;
+  owner: string;
+  createdAt: string;
+  updatedAt: string;
+  completed: boolean;
+}
 
 const Home: React.FC = () => {
   const [isPressedEverything, setisPressedEverything] = useState(true);
@@ -18,23 +34,47 @@ const Home: React.FC = () => {
   const [day, setDay] = useState<string>();
   const [month, setMonth] = useState<string>();
   const [year, setYear] = useState<number>();
+  const [items, setItems] = useState<Item[]>([]);
 
   const handlePressedEverything = useCallback(() => {
     setisPressedEverything(true);
     setisPressedToDo(false);
     setisPressedDone(false);
+    api.get('task').then((response) => {
+      setItems(response.data.data);
+    });
   }, []);
 
   const handlePressedToDo = useCallback(() => {
     setisPressedEverything(false);
     setisPressedToDo(true);
     setisPressedDone(false);
+
+    api
+      .get('task', {
+        params: {
+          completed: false,
+        },
+      })
+      .then((response) => {
+        setItems(response.data.data);
+      });
   }, []);
 
   const handlePressedDone = useCallback(() => {
     setisPressedEverything(false);
     setisPressedToDo(false);
     setisPressedDone(true);
+
+    api
+      .get('task', {
+        params: {
+          completed: true,
+        },
+      })
+      .then((response) => {
+        setItems(response.data.data);
+      });
   }, []);
 
   useEffect(() => {
@@ -62,6 +102,12 @@ const Home: React.FC = () => {
     setDay(day);
     setMonth(month);
     setYear(year);
+  }, []);
+
+  useEffect(() => {
+    api.get('task').then((response) => {
+      setItems(response.data.data);
+    });
   }, []);
 
   return (
@@ -108,6 +154,24 @@ const Home: React.FC = () => {
           {dayOfTheWeek}. {day} de {month} de {year}
         </DateTextView>
       </DateView>
+
+      {items.map((item) => (
+        <ItemView key={item._id}>
+          {item.completed ? (
+            <IconFeather>
+              <Feather name="check" size={18} color="#fff" />
+            </IconFeather>
+          ) : (
+            <Feather name="circle" size={20} color="#9FA5C0" />
+          )}
+          <ButtonText>
+            <ItemText>{item.description}</ItemText>
+          </ButtonText>
+          <ItemButton>
+            <Feather name="more-vertical" size={20} color="#9FA5C0" />
+          </ItemButton>
+        </ItemView>
+      ))}
     </Container>
   );
 };
