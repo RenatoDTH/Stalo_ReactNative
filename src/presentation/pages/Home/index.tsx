@@ -1,6 +1,6 @@
 import { Feather } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Alert } from 'react-native';
 
 import { Button } from '../../../components';
 import api from '../../../services/api';
@@ -41,6 +41,8 @@ const Home: React.FC = () => {
   const [year, setYear] = useState<number>();
   const [items, setItems] = useState<Item[]>([]);
   const [completed, setCompleted] = useState<Item[]>([]);
+
+  const navigation = useNavigation();
 
   const handlePressedEverything = useCallback(() => {
     setisPressedEverything(true);
@@ -128,6 +130,11 @@ const Home: React.FC = () => {
       });
   }, []);
 
+  const handleNavigationToDetails = async (_id: string): Promise<void> => {
+    navigation.navigate('ItemDescription', { _id });
+    console.log(_id);
+  };
+
   return (
     <Container style={{ flex: 1 }}>
       <HeaderView>
@@ -182,7 +189,7 @@ const Home: React.FC = () => {
             ) : (
               <Feather name="circle" size={20} color="#9FA5C0" />
             )}
-            <ButtonText>
+            <ButtonText onLongPress={() => handleNavigationToDetails(item._id)}>
               <ItemText>{item.description}</ItemText>
             </ButtonText>
             <ItemButton>

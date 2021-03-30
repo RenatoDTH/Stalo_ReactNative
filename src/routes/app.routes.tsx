@@ -5,6 +5,7 @@ import React from 'react';
 import { View } from 'react-native';
 
 import { Home } from '../presentation/pages';
+import ItemDescription from '../presentation/pages/ItemDescription';
 import LogOut from '../presentation/pages/LogOut';
 import AddModal from '../presentation/pages/components/addModal/addModal';
 
@@ -15,14 +16,10 @@ const HomeStackScreen = () => {
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
-        cardStyle: {
-          backgroundColor: 'transparent',
-          opacity: 0.99,
-        },
       }}
-      mode="modal"
     >
-      <Stack.Screen name="AddModal" component={AddModal} />
+      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="ItemDescription" component={ItemDescription} />
     </Stack.Navigator>
   );
 };
@@ -55,7 +52,7 @@ const AppRoutes: React.FC = () => {
     >
       <Tab.Screen
         name="Home"
-        component={Home}
+        component={HomeStackScreen}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color, size, focused }) => {
@@ -72,7 +69,7 @@ const AppRoutes: React.FC = () => {
 
       <Tab.Screen
         name="AddItem"
-        component={HomeStackScreen}
+        component={AddModal}
         options={{
           tabBarLabel: 'Adicionar',
           tabBarIcon: () => {

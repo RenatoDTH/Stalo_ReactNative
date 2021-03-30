@@ -99,6 +99,7 @@ export const FooterView = styled.View`
   height: 50px;
   flex-direction: row;
   margin-top: 10px;
+  margin-bottom: 10px;
 `;
 export const FooterViewText = styled.Text`
   font-family: Roboto_400Regular;
@@ -119,5 +120,5 @@ export const FooterViewTextTask = styled.Text`
 `;
 
 export const ItemScrowView = styled.ScrollView`
-  height: 220px;
+  height: 190px;
 `;
