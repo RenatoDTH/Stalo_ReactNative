@@ -92,3 +92,28 @@ export const IconFeather = styled.View`
   align-content: center;
   align-items: center;
 `;
+
+export const FooterView = styled.View`
+  flex: 1;
+  bottom: 0;
+  height: 50px;
+  flex-direction: row;
+  margin-top: 10px;
+`;
+export const FooterViewText = styled.Text`
+  font-family: Roboto_400Regular;
+  font-size: 17px;
+  line-height: 27px;
+  letter-spacing: 0.5px;
+  color: #2e3e5c;
+  margin-left: 20px;
+`;
+
+export const FooterViewTextTask = styled.Text`
+  font-family: Roboto_700Bold;
+  font-size: 17px;
+  line-height: 27px;
+  letter-spacing: 0.5px;
+  color: #1fcc79;
+  margin-left: 20px;
+`;

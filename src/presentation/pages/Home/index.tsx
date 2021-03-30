@@ -1,5 +1,6 @@
 import { Feather } from '@expo/vector-icons';
 import React, { useCallback, useEffect, useState } from 'react';
+import { Alert } from 'react-native';
 
 import { Button } from '../../../components';
 import api from '../../../services/api';
@@ -15,6 +16,9 @@ import {
   ItemButton,
   ButtonText,
   IconFeather,
+  FooterView,
+  FooterViewText,
+  FooterViewTextTask,
 } from './styles';
 
 interface Item {
@@ -35,6 +39,7 @@ const Home: React.FC = () => {
   const [month, setMonth] = useState<string>();
   const [year, setYear] = useState<number>();
   const [items, setItems] = useState<Item[]>([]);
+  const [completed, setCompleted] = useState<Item[]>([]);
 
   const handlePressedEverything = useCallback(() => {
     setisPressedEverything(true);
@@ -110,6 +115,18 @@ const Home: React.FC = () => {
     });
   }, []);
 
+  useEffect(() => {
+    api
+      .get('task', {
+        params: {
+          completed: true,
+        },
+      })
+      .then((response) => {
+        setCompleted(response.data.data);
+      });
+  }, []);
+
   return (
     <Container>
       <HeaderView>
@@ -172,6 +189,13 @@ const Home: React.FC = () => {
           </ItemButton>
         </ItemView>
       ))}
+
+      <FooterView>
+        <FooterViewText>Total de tarefas:</FooterViewText>
+        <FooterViewTextTask>
+          {completed.length}/{items.length}
+        </FooterViewTextTask>
+      </FooterView>
     </Container>
   );
 };
