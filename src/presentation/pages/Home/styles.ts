@@ -130,7 +130,7 @@ export const Dropdown = styled.View`
   background-color: #fff;
   padding: 24px;
   align-self: center;
-  top: 20px;
+  top: 200px;
 `;
 export const DropDownEdit = styled.TouchableOpacity`
   height: 27px;

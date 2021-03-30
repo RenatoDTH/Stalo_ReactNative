@@ -1,6 +1,7 @@
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
+import { Alert } from 'react-native';
 
 import { Button } from '../../../components';
 import api from '../../../services/api';
@@ -144,6 +145,14 @@ const Home: React.FC = () => {
     setDropwDownShow(!dropdownShow);
   };
 
+  const deleteItem = async (_id: string): Promise<void> => {
+    try {
+      await api.delete(`tasks/${_id}`);
+    } catch (err) {
+      Alert.alert('Erro ao tentar deletar', 'Tente novamente mais tarde');
+    }
+  };
+
   return (
     <Container style={{ flex: 1 }}>
       <HeaderView>
@@ -206,53 +215,53 @@ const Home: React.FC = () => {
             </ItemButton>
           </ItemView>
         ))}
-
-        {dropdownShow && (
-          <Dropdown
-            style={{
-              shadowColor: '#000',
-              shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.23,
-              shadowRadius: 2.62,
-              elevation: 4,
-            }}
-          >
-            <CloseDropDown onPress={handleDropDownShow}>
-              <Feather name="x-square" size={20} color="#FF6464" />
-            </CloseDropDown>
-            <DropDownEdit>
-              <Feather
-                name="edit"
-                size={24}
-                color="#9FA5C0"
-                style={{ marginRight: 10 }}
-              />
-              <DropDownEditText style={{ color: '#9FA5C0' }}>
-                Editar
-              </DropDownEditText>
-            </DropDownEdit>
-            <DropDownEdit>
-              <IconFeather style={{ marginRight: 12 }}>
-                <Feather name="check" size={24} color="#fff" />
-              </IconFeather>
-              <DropDownEditText style={{ color: '#1fcc79' }}>
-                Concluir
-              </DropDownEditText>
-            </DropDownEdit>
-            <DropDownEdit>
-              <Feather
-                name="trash-2"
-                size={24}
-                color="#FF6464"
-                style={{ marginRight: 10 }}
-              />
-              <DropDownEditText style={{ color: '#FF6464' }}>
-                Excluir
-              </DropDownEditText>
-            </DropDownEdit>
-          </Dropdown>
-        )}
       </ItemScrowView>
+
+      {dropdownShow && (
+        <Dropdown
+          style={{
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.23,
+            shadowRadius: 2.62,
+            elevation: 4,
+          }}
+        >
+          <CloseDropDown onPress={handleDropDownShow}>
+            <Feather name="x-square" size={20} color="#FF6464" />
+          </CloseDropDown>
+          <DropDownEdit>
+            <Feather
+              name="edit"
+              size={24}
+              color="#9FA5C0"
+              style={{ marginRight: 10 }}
+            />
+            <DropDownEditText style={{ color: '#9FA5C0' }}>
+              Editar
+            </DropDownEditText>
+          </DropDownEdit>
+          <DropDownEdit>
+            <IconFeather style={{ marginRight: 12 }}>
+              <Feather name="check" size={24} color="#fff" />
+            </IconFeather>
+            <DropDownEditText style={{ color: '#1fcc79' }}>
+              Concluir
+            </DropDownEditText>
+          </DropDownEdit>
+          <DropDownEdit>
+            <Feather
+              name="trash-2"
+              size={24}
+              color="#FF6464"
+              style={{ marginRight: 10 }}
+            />
+            <DropDownEditText style={{ color: '#FF6464' }}>
+              Excluir
+            </DropDownEditText>
+          </DropDownEdit>
+        </Dropdown>
+      )}
 
       <FooterView>
         <FooterViewText>Total de tarefas:</FooterViewText>
