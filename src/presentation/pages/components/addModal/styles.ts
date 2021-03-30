@@ -1,17 +1,17 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.View``;
-
-export const Content = styled.View`
-  background-color: 'white';
-  padding: 22;
-  justify-content: 'center';
-  align-items: 'center';
-  border-top-left-radius: 17;
-  border-top-right-radius: 17;
+export const HeaderText = styled.Text`
+  font-size: 17px;
+  line-height: 27px;
+  text-align: center;
+  letter-spacing: 0.5px;
+  color: #2e3e5c;
+  font-family: Roboto_700Bold;
+  margin-bottom: 34px;
 `;
 
-export const ContentTitle = styled.Text`
-  font-size: 20;
-  margin-bottom: 12;
+export const ButtonContainer = styled.View`
+  flex-direction: row;
+  margin-bottom: 16px;
+  justify-content: center;
 `;
