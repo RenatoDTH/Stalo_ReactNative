@@ -1,11 +1,45 @@
 import { Feather } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { View } from 'react-native';
 
-import { ModalLogOut } from '../components';
 import { Home, SignIn } from '../presentation/pages';
 import LogOut from '../presentation/pages/LogOut';
+import AddModal from '../presentation/pages/components/addModal/addModal';
+
+const Stack = createStackNavigator();
+
+const HomeStackScreen = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        cardStyle: { backgroundColor: 'transparent' },
+        cardOverlayEnabled: true,
+        cardStyleInterpolator: ({ current: { progress } }) => ({
+          cardStyle: {
+            opacity: progress.interpolate({
+              inputRange: [0, 0.5, 0.9, 1],
+              outputRange: [0, 0.25, 0.7, 1],
+            }),
+          },
+          overlayStyle: {
+            opacity: progress.interpolate({
+              inputRange: [0, 1],
+              outputRange: [0, 0.5],
+              extrapolate: 'clamp',
+            }),
+          },
+        }),
+      }}
+      mode="modal"
+    >
+      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Modal" component={AddModal} />
+    </Stack.Navigator>
+  );
+};
 
 const Tab = createBottomTabNavigator();
 
@@ -51,8 +85,8 @@ const AppRoutes: React.FC = () => {
       />
 
       <Tab.Screen
-        name="SignIn"
-        component={SignIn}
+        name="AddItem"
+        component={HomeStackScreen}
         options={{
           tabBarLabel: 'Adicionar',
           tabBarIcon: () => {
