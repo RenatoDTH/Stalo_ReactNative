@@ -2,6 +2,7 @@ import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Alert } from 'react-native';
+import { boolean } from 'yup/lib/locale';
 
 import { Button } from '../../../components';
 import api from '../../../services/api';
@@ -45,8 +46,8 @@ const Home: React.FC = () => {
   const [month, setMonth] = useState<string>();
   const [year, setYear] = useState<number>();
   const [items, setItems] = useState<Item[]>([]);
-  const [completed, setCompleted] = useState<Item[]>([]);
   const [dropdownShow, setDropwDownShow] = useState(false);
+  const [itemId, setItemId] = useState<string>();
 
   const navigation = useNavigation();
 
@@ -122,32 +123,40 @@ const Home: React.FC = () => {
     api.get('task').then((response) => {
       setItems(response.data.data);
     });
-  }, []);
-
-  useEffect(() => {
-    api
-      .get('task', {
-        params: {
-          completed: true,
-        },
-      })
-      .then((response) => {
-        setCompleted(response.data.data);
-      });
-  }, []);
+  }, [setItems]);
 
   const handleNavigationToDetails = async (_id: string): Promise<void> => {
     navigation.navigate('ItemDescription', { _id });
     console.log(_id);
   };
 
-  const handleDropDownShow = () => {
-    setDropwDownShow(!dropdownShow);
+  const handleDropDownShow = (id: string) => {
+    setItemId(id);
+    setDropwDownShow(true);
   };
 
-  const deleteItem = async (_id: string): Promise<void> => {
+  const handleDropDownClose = () => {
+    setDropwDownShow(false);
+  };
+
+  const deleteItem = async (): Promise<void> => {
     try {
-      await api.delete(`tasks/${_id}`);
+      await api.delete(`task/${itemId}`);
+      setDropwDownShow(false);
+      const itemFiltered = items.filter((item) => item._id !== itemId);
+      setItems(itemFiltered);
+    } catch (err) {
+      Alert.alert('Erro ao tentar deletar', 'Tente novamente mais tarde');
+    }
+    console.log(itemId);
+  };
+
+  const succededItem = async (): Promise<void> => {
+    try {
+      await api.put(`task/${itemId}`, {
+        completed: true,
+      });
+      setDropwDownShow(false);
     } catch (err) {
       Alert.alert('Erro ao tentar deletar', 'Tente novamente mais tarde');
     }
@@ -210,7 +219,7 @@ const Home: React.FC = () => {
             <ButtonText onLongPress={() => handleNavigationToDetails(item._id)}>
               <ItemText>{item.description}</ItemText>
             </ButtonText>
-            <ItemButton onPress={handleDropDownShow}>
+            <ItemButton onPress={() => handleDropDownShow(item._id)}>
               <Feather name="more-vertical" size={20} color="#9FA5C0" />
             </ItemButton>
           </ItemView>
@@ -227,7 +236,7 @@ const Home: React.FC = () => {
             elevation: 4,
           }}
         >
-          <CloseDropDown onPress={handleDropDownShow}>
+          <CloseDropDown onPress={handleDropDownClose}>
             <Feather name="x-square" size={20} color="#FF6464" />
           </CloseDropDown>
           <DropDownEdit>
@@ -241,7 +250,7 @@ const Home: React.FC = () => {
               Editar
             </DropDownEditText>
           </DropDownEdit>
-          <DropDownEdit>
+          <DropDownEdit onPress={succededItem}>
             <IconFeather style={{ marginRight: 12 }}>
               <Feather name="check" size={24} color="#fff" />
             </IconFeather>
@@ -249,7 +258,7 @@ const Home: React.FC = () => {
               Concluir
             </DropDownEditText>
           </DropDownEdit>
-          <DropDownEdit>
+          <DropDownEdit onPress={deleteItem}>
             <Feather
               name="trash-2"
               size={24}
@@ -266,7 +275,7 @@ const Home: React.FC = () => {
       <FooterView>
         <FooterViewText>Total de tarefas:</FooterViewText>
         <FooterViewTextTask>
-          {completed.length}/{items.length}
+          {items.filter((item) => item.completed).length}/{items.length}
         </FooterViewTextTask>
       </FooterView>
     </Container>

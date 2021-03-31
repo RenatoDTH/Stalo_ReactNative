@@ -35,6 +35,7 @@ const AddModal: React.FC = () => {
       });
 
       Alert.alert('Item criado com sucesso');
+      navigation.navigate('Home');
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errors = getValidationErrors(err);
