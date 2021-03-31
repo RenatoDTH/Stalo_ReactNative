@@ -220,7 +220,10 @@ const Home: React.FC = () => {
             ) : (
               <Feather name="circle" size={20} color="#9FA5C0" />
             )}
-            <ButtonText onLongPress={() => handleNavigationToDetails(item._id)}>
+            <ButtonText
+              onLongPress={() => handleDropDownShow(item._id)}
+              onPress={() => handleNavigationToDetails(item._id)}
+            >
               <ItemText>{item.description}</ItemText>
             </ButtonText>
             <ItemButton onPress={() => handleDropDownShow(item._id)}>
