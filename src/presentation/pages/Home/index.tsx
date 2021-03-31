@@ -162,10 +162,19 @@ const Home: React.FC = () => {
 
   const succededItem = async (): Promise<void> => {
     try {
-      await api.put(`task/${itemId}`, {
+      const response = await api.put(`task/${itemId}`, {
         completed: true,
       });
       setDropwDownShow(false);
+
+      setItems((state) => {
+        return state.map((itemState) => {
+          if (itemState._id === itemId) {
+            return { ...response.data.data };
+          }
+          return itemState;
+        });
+      });
     } catch (err) {
       Alert.alert('Erro ao tentar deletar', 'Tente novamente mais tarde');
     }
