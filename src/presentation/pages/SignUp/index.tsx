@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/mobile';
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { Alert, TextInput } from 'react-native';
 import * as Yup from 'yup';
 
@@ -29,6 +29,7 @@ const SignUp: React.FC = () => {
   const passwordInputRef = useRef<TextInput>(null);
   const emailInputRef = useRef<TextInput>(null);
   const ageInputRef = useRef<TextInput>(null);
+  const [secureTextEntry, setSecureTextEntry] = useState(true);
 
   const handleSignUp = useCallback(
     async (data: SignUpFormData) => {
@@ -41,7 +42,7 @@ const SignUp: React.FC = () => {
             .required('E=mail obrigatório')
             .email('Digite um e-mail válido'),
           age: Yup.number().required('Idade obrigatório'),
-          password: Yup.string().required('Senha obrigatória'),
+          password: Yup.string().required('Senha obrigatória').min(7),
         });
 
         await schema.validate(data, {
@@ -74,6 +75,10 @@ const SignUp: React.FC = () => {
     },
     [navigation],
   );
+
+  const handleShowPassword = useCallback(() => {
+    setSecureTextEntry((state) => !state);
+  }, []);
 
   return (
     <>
@@ -114,11 +119,12 @@ const SignUp: React.FC = () => {
             ref={ageInputRef}
           />
           <Input
-            secureTextEntry
             returnKeyType="send"
             onSubmitEditing={() => formRef.current?.submitForm()}
             name="password"
-            icon="eye"
+            secureTextEntry={secureTextEntry}
+            handleShowPassword={handleShowPassword}
+            isPassword
             placeholder="Senha"
             ref={passwordInputRef}
           />

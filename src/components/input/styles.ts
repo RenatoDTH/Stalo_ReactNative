@@ -42,3 +42,5 @@ export const TextInput = styled.TextInput.attrs({
 `;
 
 export const Icon = styled(Feather)``;
+
+export const TouchIcon = styled.TouchableOpacity``;

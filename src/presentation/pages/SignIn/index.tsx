@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/mobile';
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import {
   Alert,
   KeyboardAvoidingView,
@@ -34,6 +34,7 @@ const SignIn: React.FC = () => {
   const navigation = useNavigation();
   const formRef = useRef<FormHandles>(null);
   const passwordInputRef = useRef<TextInput>(null);
+  const [secureTextEntry, setSecureTextEntry] = useState(true);
   const { signIn } = useAuth();
 
   const handleSignIn = useCallback(
@@ -57,7 +58,7 @@ const SignIn: React.FC = () => {
           password: data.password,
         });
 
-        Alert.alert('Deu certo');
+        Alert.alert('Login efetuado com sucesso!');
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
@@ -73,6 +74,10 @@ const SignIn: React.FC = () => {
     },
     [signIn],
   );
+
+  const handleShowPassword = useCallback(() => {
+    setSecureTextEntry((state) => !state);
+  }, []);
 
   return (
     <>
@@ -100,11 +105,12 @@ const SignIn: React.FC = () => {
                 placeholder="E-mail"
               />
               <Input
-                secureTextEntry
+                secureTextEntry={secureTextEntry}
+                handleShowPassword={handleShowPassword}
                 returnKeyType="send"
                 onSubmitEditing={() => formRef.current?.submitForm()}
                 name="password"
-                icon="eye"
+                isPassword
                 placeholder="Senha"
                 ref={passwordInputRef}
               />

@@ -1,3 +1,4 @@
+import { Feather } from '@expo/vector-icons';
 import { useField } from '@unform/core';
 import React, {
   forwardRef,
@@ -9,12 +10,14 @@ import React, {
 } from 'react';
 import { TextInputProps, ViewStyle, StyleProp } from 'react-native';
 
-import { Container, TextInput, Icon } from './styles';
+import { Container, TextInput, TouchIcon } from './styles';
 
 interface InputProps extends TextInputProps {
   name: string;
-  icon?: string;
   containerStyle?: StyleProp<ViewStyle>;
+  isPassword?: boolean;
+  secureTextEntry?: boolean;
+  handleShowPassword?(): void;
 }
 
 interface InputValueReference {
@@ -26,7 +29,14 @@ interface InputRef {
 }
 
 const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
-  { name, icon, containerStyle = {}, ...rest },
+  {
+    name,
+    isPassword,
+    handleShowPassword,
+    secureTextEntry,
+    containerStyle = {},
+    ...rest
+  },
   ref,
 ) => {
   const inputElementRef = useRef<any>(null);
@@ -71,13 +81,21 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
         defaultValue={defaultValue}
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}
+        secureTextEntry={secureTextEntry}
         onChangeText={(value) => {
           inputValueRef.current.value = value;
         }}
         {...rest}
       />
-
-      <Icon name={icon} size={15} color="#9FA5C0" />
+      {isPassword && (
+        <TouchIcon onPress={handleShowPassword}>
+          <Feather
+            name={secureTextEntry ? 'eye' : 'eye-off'}
+            size={15}
+            color="#9FA5C0"
+          />
+        </TouchIcon>
+      )}
     </Container>
   );
 };
