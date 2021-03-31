@@ -162,6 +162,10 @@ const Home: React.FC = () => {
     }
   };
 
+  const navigateEditItem = async (): Promise<void> => {
+    navigation.navigate('EditModal', { itemId });
+  };
+
   return (
     <Container style={{ flex: 1 }}>
       <HeaderView>
@@ -239,7 +243,7 @@ const Home: React.FC = () => {
           <CloseDropDown onPress={handleDropDownClose}>
             <Feather name="x-square" size={20} color="#FF6464" />
           </CloseDropDown>
-          <DropDownEdit>
+          <DropDownEdit onPress={navigateEditItem}>
             <Feather
               name="edit"
               size={24}

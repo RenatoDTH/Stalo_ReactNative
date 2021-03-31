@@ -41,7 +41,6 @@ const ItemDescription: React.FC = () => {
     api.get(`task/${routeParams._id}`).then((response) => {
       setItem(response.data.data);
     });
-    console.log(item);
   }, []);
 
   return (

@@ -1,7 +1,7 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/mobile';
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { View, Alert, Text } from 'react-native';
 import * as Yup from 'yup';
 
@@ -10,31 +10,49 @@ import api from '../../../../services/api';
 import getValidationErrors from '../../../../utils/getValidationsErrors';
 import { HeaderText, ButtonContainer, ContainerWrap } from './styles';
 
-interface AddDescriptionFormData {
-  description: string;
+interface Params {
+  itemId: string;
 }
 
-const AddModal: React.FC = () => {
+interface Item {
+  _id: string;
+  description: string;
+  owner: string;
+  createdAt: string;
+  updatedAt: string;
+  completed: boolean;
+}
+
+const EditModal: React.FC = () => {
   const navigation = useNavigation();
+  const [item, setItem] = useState<Item>({} as Item);
+  const route = useRoute();
+  const routeParams = route.params as Params;
+
+  useEffect(() => {
+    console.log(routeParams.itemId);
+    api.get(`task/${routeParams.itemId}`).then((response) => {
+      setItem(response.data.data);
+    });
+  }, []);
+
   const formRef = useRef<FormHandles>(null);
 
-  const handleCreateItem = useCallback(async (data: AddDescriptionFormData) => {
+  const handleEditItem = useCallback(async (data: Item) => {
     try {
       formRef.current?.setErrors({});
 
       const schema = Yup.object().shape({
-        description: Yup.string().required('Item obrigatório'),
+        description: Yup.string().required('Campo obrigatório'),
       });
 
       await schema.validate(data, {
         abortEarly: false,
       });
 
-      await api.post('task', {
-        description: data.description,
-      });
+      await api.put(`task/${routeParams.itemId}`, data);
 
-      Alert.alert('Item criado com sucesso');
+      Alert.alert('Item editado com sucesso');
       navigation.navigate('Home');
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
@@ -44,8 +62,8 @@ const AddModal: React.FC = () => {
       }
 
       Alert.alert(
-        'Erro na criação do item',
-        'Ocorreu um erro ao criar o item, verifique o campo',
+        'Erro na edição do item',
+        'Ocorreu um erro ao editar o item, tente mais tarde',
       );
     }
   }, []);
@@ -66,8 +84,8 @@ const AddModal: React.FC = () => {
             alignItems: 'center',
           }}
         >
-          <HeaderText>Criar nova tarefa</HeaderText>
-          <Form ref={formRef} onSubmit={handleCreateItem}>
+          <HeaderText>Editar tarefa {item.description}</HeaderText>
+          <Form ref={formRef} onSubmit={handleEditItem}>
             <Input
               name="description"
               placeholder="Descrição"
@@ -91,7 +109,7 @@ const AddModal: React.FC = () => {
                 style={{ width: 156 }}
                 onPress={() => formRef.current?.submitForm()}
               >
-                Criar
+                Salvar
               </Button>
             </ButtonContainer>
           </Form>
@@ -101,4 +119,4 @@ const AddModal: React.FC = () => {
   );
 };
 
-export default AddModal;
+export default EditModal;
