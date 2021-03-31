@@ -5,10 +5,10 @@ import React from 'react';
 import { View } from 'react-native';
 
 import { Home } from '../presentation/pages';
+import AddModal from '../presentation/pages/AddModal/addModal';
+import EditModal from '../presentation/pages/EditModal/editModal';
 import ItemDescription from '../presentation/pages/ItemDescription';
 import LogOut from '../presentation/pages/LogOut';
-import AddModal from '../presentation/pages/components/addModal/addModal';
-import EditModal from '../presentation/pages/components/editModal/editModal';
 
 const Stack = createStackNavigator();
 

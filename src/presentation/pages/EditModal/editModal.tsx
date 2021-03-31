@@ -5,9 +5,9 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { View, Alert, Text } from 'react-native';
 import * as Yup from 'yup';
 
-import { Input, Button } from '../../../../components';
-import api from '../../../../services/api';
-import getValidationErrors from '../../../../utils/getValidationsErrors';
+import { Input, Button } from '../../../components';
+import api from '../../../services/api';
+import getValidationErrors from '../../../utils/getValidationsErrors';
 import { HeaderText, ButtonContainer, ContainerWrap } from './styles';
 
 interface Params {
