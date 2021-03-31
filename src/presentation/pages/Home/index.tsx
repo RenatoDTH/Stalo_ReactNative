@@ -1,5 +1,6 @@
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Alert, ActivityIndicator } from 'react-native';
 
@@ -185,133 +186,139 @@ const Home: React.FC = () => {
   };
 
   return (
-    <Container style={{ flex: 1 }}>
-      <HeaderView>
-        <HeaderText>Filtrar</HeaderText>
-        <ButtonView>
-          <Button
-            onPress={handlePressedEverything}
+    <LinearGradient
+      colors={['#fff', 'rgba(31, 204, 121, 0.4)']}
+      start={{ x: 0, y: 0.95 }}
+      style={{ flex: 1 }}
+    >
+      <Container>
+        <HeaderView>
+          <HeaderText>Filtrar</HeaderText>
+          <ButtonView>
+            <Button
+              onPress={handlePressedEverything}
+              style={{
+                height: 48,
+                width: 102,
+                backgroundColor: isPressedEverything ? '#1fcc79' : '#F4F5F7',
+              }}
+            >
+              Todas
+            </Button>
+            <Button
+              onPress={handlePressedToDo}
+              style={{
+                height: 48,
+                width: 102,
+                marginLeft: 10,
+                backgroundColor: isPressedToDo ? '#1fcc79' : '#F4F5F7',
+              }}
+            >
+              A fazer
+            </Button>
+            <Button
+              onPress={handlePressedDone}
+              style={{
+                height: 48,
+                width: 102,
+                marginLeft: 10,
+                backgroundColor: isPressedDone ? '#1fcc79' : '#F4F5F7',
+              }}
+            >
+              Feitas
+            </Button>
+          </ButtonView>
+        </HeaderView>
+        <DateView>
+          <DateTextView>
+            {dayOfTheWeek}. {day} de {month} de {year}
+          </DateTextView>
+        </DateView>
+        <ItemScrowView>
+          {isLoading ? (
+            <ActivityIndicator
+              size="large"
+              color="#1fcc79"
+              style={{ marginTop: 30 }}
+            />
+          ) : (
+            items.map((item) => (
+              <ItemView key={item._id}>
+                {item.completed ? (
+                  <IconFeather>
+                    <Feather name="check" size={18} color="#fff" />
+                  </IconFeather>
+                ) : (
+                  <Feather name="circle" size={20} color="#9FA5C0" />
+                )}
+                <ButtonText
+                  onLongPress={() => handleDropDownShow(item._id)}
+                  onPress={() => handleNavigationToDetails(item._id)}
+                >
+                  <ItemText>{item.description}</ItemText>
+                </ButtonText>
+                <ItemButton onPress={() => handleDropDownShow(item._id)}>
+                  <Feather name="more-vertical" size={20} color="#9FA5C0" />
+                </ItemButton>
+              </ItemView>
+            ))
+          )}
+        </ItemScrowView>
+
+        {dropdownShow && (
+          <Dropdown
             style={{
-              height: 48,
-              width: 102,
-              backgroundColor: isPressedEverything ? '#1fcc79' : '#F4F5F7',
+              shadowColor: '#000',
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.23,
+              shadowRadius: 2.62,
+              elevation: 4,
             }}
           >
-            Todas
-          </Button>
-          <Button
-            onPress={handlePressedToDo}
-            style={{
-              height: 48,
-              width: 102,
-              marginLeft: 10,
-              backgroundColor: isPressedToDo ? '#1fcc79' : '#F4F5F7',
-            }}
-          >
-            A fazer
-          </Button>
-          <Button
-            onPress={handlePressedDone}
-            style={{
-              height: 48,
-              width: 102,
-              marginLeft: 10,
-              backgroundColor: isPressedDone ? '#1fcc79' : '#F4F5F7',
-            }}
-          >
-            Feitas
-          </Button>
-        </ButtonView>
-      </HeaderView>
-      <DateView>
-        <DateTextView>
-          {dayOfTheWeek}. {day} de {month} de {year}
-        </DateTextView>
-      </DateView>
-      <ItemScrowView>
-        {isLoading ? (
-          <ActivityIndicator
-            size="large"
-            color="#1fcc79"
-            style={{ marginTop: 30 }}
-          />
-        ) : (
-          items.map((item) => (
-            <ItemView key={item._id}>
-              {item.completed ? (
-                <IconFeather>
-                  <Feather name="check" size={18} color="#fff" />
-                </IconFeather>
-              ) : (
-                <Feather name="circle" size={20} color="#9FA5C0" />
-              )}
-              <ButtonText
-                onLongPress={() => handleDropDownShow(item._id)}
-                onPress={() => handleNavigationToDetails(item._id)}
-              >
-                <ItemText>{item.description}</ItemText>
-              </ButtonText>
-              <ItemButton onPress={() => handleDropDownShow(item._id)}>
-                <Feather name="more-vertical" size={20} color="#9FA5C0" />
-              </ItemButton>
-            </ItemView>
-          ))
+            <CloseDropDown onPress={handleDropDownClose}>
+              <Feather name="x-square" size={20} color="#FF6464" />
+            </CloseDropDown>
+            <DropDownEdit onPress={navigateEditItem}>
+              <Feather
+                name="edit"
+                size={24}
+                color="#9FA5C0"
+                style={{ marginRight: 10 }}
+              />
+              <DropDownEditText style={{ color: '#9FA5C0' }}>
+                Editar
+              </DropDownEditText>
+            </DropDownEdit>
+            <DropDownEdit onPress={succededItem}>
+              <IconFeather style={{ marginRight: 12 }}>
+                <Feather name="check" size={24} color="#fff" />
+              </IconFeather>
+              <DropDownEditText style={{ color: '#1fcc79' }}>
+                Concluir
+              </DropDownEditText>
+            </DropDownEdit>
+            <DropDownEdit onPress={deleteItem}>
+              <Feather
+                name="trash-2"
+                size={24}
+                color="#FF6464"
+                style={{ marginRight: 10 }}
+              />
+              <DropDownEditText style={{ color: '#FF6464' }}>
+                Excluir
+              </DropDownEditText>
+            </DropDownEdit>
+          </Dropdown>
         )}
-      </ItemScrowView>
 
-      {dropdownShow && (
-        <Dropdown
-          style={{
-            shadowColor: '#000',
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.23,
-            shadowRadius: 2.62,
-            elevation: 4,
-          }}
-        >
-          <CloseDropDown onPress={handleDropDownClose}>
-            <Feather name="x-square" size={20} color="#FF6464" />
-          </CloseDropDown>
-          <DropDownEdit onPress={navigateEditItem}>
-            <Feather
-              name="edit"
-              size={24}
-              color="#9FA5C0"
-              style={{ marginRight: 10 }}
-            />
-            <DropDownEditText style={{ color: '#9FA5C0' }}>
-              Editar
-            </DropDownEditText>
-          </DropDownEdit>
-          <DropDownEdit onPress={succededItem}>
-            <IconFeather style={{ marginRight: 12 }}>
-              <Feather name="check" size={24} color="#fff" />
-            </IconFeather>
-            <DropDownEditText style={{ color: '#1fcc79' }}>
-              Concluir
-            </DropDownEditText>
-          </DropDownEdit>
-          <DropDownEdit onPress={deleteItem}>
-            <Feather
-              name="trash-2"
-              size={24}
-              color="#FF6464"
-              style={{ marginRight: 10 }}
-            />
-            <DropDownEditText style={{ color: '#FF6464' }}>
-              Excluir
-            </DropDownEditText>
-          </DropDownEdit>
-        </Dropdown>
-      )}
-
-      <FooterView>
-        <FooterViewText>Total de tarefas:</FooterViewText>
-        <FooterViewTextTask>
-          {items.filter((item) => item.completed).length}/{items.length}
-        </FooterViewTextTask>
-      </FooterView>
-    </Container>
+        <FooterView>
+          <FooterViewText>Total de tarefas:</FooterViewText>
+          <FooterViewTextTask>
+            {items.filter((item) => item.completed).length}/{items.length}
+          </FooterViewTextTask>
+        </FooterView>
+      </Container>
+    </LinearGradient>
   );
 };
 
