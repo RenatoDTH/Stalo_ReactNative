@@ -29,6 +29,8 @@ interface Item {
   createdAt: string;
   updatedAt: string;
   completed: boolean;
+  FormattedCreatedAt: string;
+  FormattedUpdatedAt: string;
 }
 
 const ItemDescription: React.FC = () => {
@@ -39,7 +41,25 @@ const ItemDescription: React.FC = () => {
 
   useEffect(() => {
     api.get(`task/${routeParams._id}`).then((response) => {
-      setItem(response.data.data);
+      const createdAtDate = new Date(response.data.data.createdAt)
+        .toISOString()
+        .replace(/T.*/, '')
+        .split('-')
+        .reverse()
+        .join('/');
+
+      const updatedAtDate = new Date(response.data.data.updatedAt)
+        .toISOString()
+        .replace(/T.*/, '')
+        .split('-')
+        .reverse()
+        .join('/');
+
+      setItem({
+        ...response.data.data,
+        FormattedCreatedAt: createdAtDate,
+        FormattedUpdatedAt: updatedAtDate,
+      });
     });
   }, []);
 
@@ -51,9 +71,9 @@ const ItemDescription: React.FC = () => {
         <Id>Id</Id>
         <IdText>{item._id}</IdText>
         <CreationDate>Data de criação</CreationDate>
-        <CreationDateText>{item.createdAt}</CreationDateText>
+        <CreationDateText>{item.FormattedCreatedAt}</CreationDateText>
         <LastUpdated>Última atualização</LastUpdated>
-        <LastUpdatedText>{item.updatedAt}</LastUpdatedText>
+        <LastUpdatedText>{item.FormattedUpdatedAt}</LastUpdatedText>
         <Status>Status</Status>
         <StatusText>{item.completed ? 'Feito' : 'A fazer'}</StatusText>
         <Button
