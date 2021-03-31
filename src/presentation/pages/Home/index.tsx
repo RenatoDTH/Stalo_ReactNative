@@ -1,8 +1,7 @@
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Alert } from 'react-native';
-import { boolean } from 'yup/lib/locale';
+import { Alert, ActivityIndicator } from 'react-native';
 
 import { Button } from '../../../components';
 import api from '../../../services/api';
@@ -48,6 +47,7 @@ const Home: React.FC = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [dropdownShow, setDropwDownShow] = useState(false);
   const [itemId, setItemId] = useState<string>();
+  const [isLoading, setIsLoading] = useState(true);
 
   const navigation = useNavigation();
 
@@ -55,8 +55,11 @@ const Home: React.FC = () => {
     setisPressedEverything(true);
     setisPressedToDo(false);
     setisPressedDone(false);
+    setIsLoading(true);
+
     api.get('task').then((response) => {
       setItems(response.data.data);
+      setIsLoading(false);
     });
   }, []);
 
@@ -64,6 +67,7 @@ const Home: React.FC = () => {
     setisPressedEverything(false);
     setisPressedToDo(true);
     setisPressedDone(false);
+    setIsLoading(true);
 
     api
       .get('task', {
@@ -73,6 +77,7 @@ const Home: React.FC = () => {
       })
       .then((response) => {
         setItems(response.data.data);
+        setIsLoading(false);
       });
   }, []);
 
@@ -80,6 +85,7 @@ const Home: React.FC = () => {
     setisPressedEverything(false);
     setisPressedToDo(false);
     setisPressedDone(true);
+    setIsLoading(true);
 
     api
       .get('task', {
@@ -89,6 +95,7 @@ const Home: React.FC = () => {
       })
       .then((response) => {
         setItems(response.data.data);
+        setIsLoading(false);
       });
   }, []);
 
@@ -120,8 +127,10 @@ const Home: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    setIsLoading(true);
     api.get('task').then((response) => {
       setItems(response.data.data);
+      setIsLoading(false);
     });
   }, [setItems]);
 
@@ -211,26 +220,34 @@ const Home: React.FC = () => {
         </DateTextView>
       </DateView>
       <ItemScrowView>
-        {items.map((item) => (
-          <ItemView key={item._id}>
-            {item.completed ? (
-              <IconFeather>
-                <Feather name="check" size={18} color="#fff" />
-              </IconFeather>
-            ) : (
-              <Feather name="circle" size={20} color="#9FA5C0" />
-            )}
-            <ButtonText
-              onLongPress={() => handleDropDownShow(item._id)}
-              onPress={() => handleNavigationToDetails(item._id)}
-            >
-              <ItemText>{item.description}</ItemText>
-            </ButtonText>
-            <ItemButton onPress={() => handleDropDownShow(item._id)}>
-              <Feather name="more-vertical" size={20} color="#9FA5C0" />
-            </ItemButton>
-          </ItemView>
-        ))}
+        {isLoading ? (
+          <ActivityIndicator
+            size="large"
+            color="#1fcc79"
+            style={{ marginTop: 30 }}
+          />
+        ) : (
+          items.map((item) => (
+            <ItemView key={item._id}>
+              {item.completed ? (
+                <IconFeather>
+                  <Feather name="check" size={18} color="#fff" />
+                </IconFeather>
+              ) : (
+                <Feather name="circle" size={20} color="#9FA5C0" />
+              )}
+              <ButtonText
+                onLongPress={() => handleDropDownShow(item._id)}
+                onPress={() => handleNavigationToDetails(item._id)}
+              >
+                <ItemText>{item.description}</ItemText>
+              </ButtonText>
+              <ItemButton onPress={() => handleDropDownShow(item._id)}>
+                <Feather name="more-vertical" size={20} color="#9FA5C0" />
+              </ItemButton>
+            </ItemView>
+          ))
+        )}
       </ItemScrowView>
 
       {dropdownShow && (
