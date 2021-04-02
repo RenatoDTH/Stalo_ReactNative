@@ -7,16 +7,16 @@ Desafio realizado para o processo seletivo da Stalo, seguindo o layout e utiliza
 Este é um aplicativo android/ios desenvolvido pelo expo, onde o mesmo é um app de ToDo.
 Ele apresenta um sistema de autenticação onde não é possível se manter na página Home sem estar logado.
 <p align="center">
-  <img alt="GoBarber" src=".github/Login.PNG" width="30%">
-  <img alt="GoBarber" src=".github/SignUp.PNG" width="30%">
+  <img alt="Loginr" src=".github/Login.png" width="30%">
+  <img alt="SignUp" src=".github/SignUp.png" width="30%">
 </p>
 
 Dentro do app, é possível criar, editar, deletar e filtrar tarefas, além de visualizar mais informações sobre.
 
 <p align="center">
-  <img alt="GoBarber" src=".github/Home.PNG" width="30%">
-  <img alt="GoBarber" src=".github/Add.PNG" width="30%">
-  <img alt="GoBarber" src=".github/Description.PNG" width="30%">
+  <img alt="Home" src=".github/Home.png" width="30%">
+  <img alt="Add" src=".github/Add.png" width="30%">
+  <img alt="Description" src=".github/Description.png" width="30%">
 </p>
 
 ## Dependências
