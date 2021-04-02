@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 
 import { Input, Button } from '../../../components';
 import api from '../../../services/api';
-import getValidationErrors from '../../../utils/getValidationsErrors';
+import getValidationErrors from '../../../utils/getValidationErrors/getValidationsErrors';
 import { HeaderText, ButtonContainer, ContainerWrap } from './styles';
 
 interface AddDescriptionFormData {

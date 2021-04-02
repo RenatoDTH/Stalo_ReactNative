@@ -137,7 +137,6 @@ const Home: React.FC = () => {
 
   const handleNavigationToDetails = async (_id: string): Promise<void> => {
     navigation.navigate('ItemDescription', { _id });
-    console.log(_id);
   };
 
   const handleDropDownShow = (id: string) => {
@@ -158,7 +157,6 @@ const Home: React.FC = () => {
     } catch (err) {
       Alert.alert('Erro ao tentar deletar', 'Tente novamente mais tarde');
     }
-    console.log(itemId);
   };
 
   const succededItem = async (): Promise<void> => {

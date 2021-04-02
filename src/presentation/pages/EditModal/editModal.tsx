@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 
 import { Input, Button } from '../../../components';
 import api from '../../../services/api';
-import getValidationErrors from '../../../utils/getValidationsErrors';
+import getValidationErrors from '../../../utils/getValidationErrors/getValidationsErrors';
 import { HeaderText, ButtonContainer, ContainerWrap } from './styles';
 
 interface Params {
@@ -30,7 +30,6 @@ const EditModal: React.FC = () => {
   const routeParams = route.params as Params;
 
   useEffect(() => {
-    console.log(routeParams.itemId);
     api.get(`task/${routeParams.itemId}`).then((response) => {
       setItem(response.data.data);
     });

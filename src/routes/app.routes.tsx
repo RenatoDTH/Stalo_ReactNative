@@ -4,11 +4,13 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { View } from 'react-native';
 
-import { Home } from '../presentation/pages';
-import AddModal from '../presentation/pages/AddModal/addModal';
-import EditModal from '../presentation/pages/EditModal/editModal';
-import ItemDescription from '../presentation/pages/ItemDescription';
-import LogOut from '../presentation/pages/LogOut';
+import {
+  Home,
+  AddModal,
+  EditModal,
+  ItemDescription,
+  LogOut,
+} from '../presentation/pages';
 
 const Stack = createStackNavigator();
 

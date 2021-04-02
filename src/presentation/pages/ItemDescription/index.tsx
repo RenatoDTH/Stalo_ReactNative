@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 import { Button } from '../../../components';
 import api from '../../../services/api';
+import { formatDate } from '../../../utils';
 import {
   Container,
   Description,
@@ -41,19 +42,9 @@ const ItemDescription: React.FC = () => {
 
   useEffect(() => {
     api.get(`task/${routeParams._id}`).then((response) => {
-      const createdAtDate = new Date(response.data.data.createdAt)
-        .toISOString()
-        .replace(/T.*/, '')
-        .split('-')
-        .reverse()
-        .join('/');
+      const createdAtDate = formatDate(response.data.data.createdAt);
 
-      const updatedAtDate = new Date(response.data.data.updatedAt)
-        .toISOString()
-        .replace(/T.*/, '')
-        .split('-')
-        .reverse()
-        .join('/');
+      const updatedAtDate = formatDate(response.data.data.updatedAt);
 
       setItem({
         ...response.data.data,

@@ -13,7 +13,7 @@ import * as Yup from 'yup';
 
 import { Input, Button } from '../../../components/index';
 import { useAuth } from '../../../hooks/auth';
-import getValidationErrors from '../../../utils/getValidationsErrors';
+import getValidationErrors from '../../../utils/getValidationErrors/getValidationsErrors';
 import {
   Container,
   Title,

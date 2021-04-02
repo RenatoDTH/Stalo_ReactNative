@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 
 import { Input, Button } from '../../../components/index';
 import api from '../../../services/api';
-import getValidationErrors from '../../../utils/getValidationsErrors';
+import getValidationErrors from '../../../utils/getValidationErrors/getValidationsErrors';
 import {
   Container,
   Title,
@@ -66,7 +66,6 @@ const SignUp: React.FC = () => {
           return;
         }
 
-        console.log(data);
         Alert.alert(
           'Erro no cadastro',
           'Ocorreu um erro ao fazer cadastro, cheque as credenciais',
